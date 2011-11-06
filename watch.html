@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Watch Popcorn</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script src="jQuery.peerbind.js"></script>
+	<script src="http://popcornjs.org/code/dist/popcorn.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			var options = {
+				//Leaving as is allows for localhost / Local LAN IP to be used allowing empty string is in the todo
+				'endpointprefixes': [""], 
+				
+				//Set to your url, IP, or localhost (for local testing), moving port to config on the todo 
+				'endpoint': "jbuckley.ca:8080", 
+				
+				//string, geo, ip, url
+				'type': "domain", 
+				
+				//Required for type: string only
+				'regstring': "PeerBindChatExample", 
+				
+				//Polling interval in milliseconds
+				'pollinterval': 500, 
+				'pollmax': 31000,
+			};
+
+      var p = Popcorn('#video');
+
+      var reg = $().peerregister(options);
+      
+      var remotes = 0;
+      $(document.body).peerbind("connected", function(e) {
+        if (e.srcPeer) {
+          remotes++;
+          document.getElementById('remotes').innerHTML = remotes;
+        }
+      });
+      $(document.body).peerbind("disconnected", function(e) {
+        if (e.srcPeer) {
+          remotes--;
+          document.getElementById('remotes').innerHTML = remotes;
+        }
+      });
+      
+      $(document.body).peerbind("popcornplay", {
+        local: function(e) {
+          console.log("local triggered play");
+        },
+        peer: function(e) {
+          console.log("peer triggered play");
+          p.play();
+        }
+      });
+      $(document.body).peerbind("popcornpause", {
+        local: function(e) {
+          console.log("local triggered pause");
+        },
+        peer: function(e) {
+          console.log("peer triggered pause");
+          p.pause();
+        }
+      });
+		});
+	</script>  
+  </head>
+  <body>
+    <video id="video" src="atultroll.webm" controls></video>
+    <p>Remotes connected: <span id="remotes">0</span></p>
+  </body>
+</html>

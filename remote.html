@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>A Peer Bind Example</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script src="jQuery.peerbind.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			var options = {
+				//Leaving as is allows for localhost / Local LAN IP to be used allowing empty string is in the todo
+				'endpointprefixes': [""], 
+				
+				//Set to your url, IP, or localhost (for local testing), moving port to config on the todo 
+				'endpoint': "jbuckley.ca:8080", 
+				
+				//string, geo, ip, url
+				'type': "domain", 
+				
+				//Required for type: string only
+				'regstring': "PeerBindChatExample", 
+				
+				//Polling interval in milliseconds
+				'pollinterval': 500, 
+				'pollmax': 31000,
+			};
+			
+			var reg = $().peerregister(options);
+      
+      $(document.body).peertrigger("connected");
+      
+      var isPlaying = false;
+      
+      document.getElementById('button').addEventListener('click', function(e) {
+        if (isPlaying) {
+          $(document.body).peertrigger("popcornpause");
+          this.src = "img/Button-Play-icon.png";
+        } else {
+          $(document.body).peertrigger("popcornplay");
+          this.src = "img/Button-Pause-icon.png";
+        }
+        isPlaying = !isPlaying;
+      }, false);
+    });
+    
+    $(window).unload(function() {
+      $(document.body).peertrigger("disconnected");
+    });
+  
+	</script>  
+  </head>
+  <body>
+    <img id="button" width="256" height="256" src="img/Button-Play-icon.png">
+    <p>Images are CC 3.0 by Deleket (Jojo Mendoza)</p>
+  </body>
+</html>
