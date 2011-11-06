@@ -33,40 +33,23 @@
 				'coordsSet': false, //to remove - unused
 				
 				//Polling interval in milliseconds
-				'pollinterval': 500, 
+				'pollinterval': 500,
 				'pollmax': 31000,
 				
 				//Callback function to be called after registration with the server.
 				'regcallback': null 
 			};
 			
-			var popcorn = Popcorn( "#video" );
-			
-			popcorn.exec( 2, function() {
-			console.log( "first exec" );
-			  $("#timeline").peertrigger("addEvent", {
-			    start: 2,
-			    end: 1000,
-			    title: "DRUNKEN DATA",
-			    target: "timeline"
-			  })	;
-			})
-			.exec( 5, function() {
-			console.log( "second exec" );
-			  $("#timeline").peertrigger("addEvent", {
-			    start: 5,
-			    end: 1000,
-			    title: "AWW HELLL YEAAAA",
-			    target: "timeline"
-			  });
-			})
-			.exec( 10, function() {
-			  $("#timeline").peertrigger("addEvent", {
-			    start: 5,
-			    end: 1000,
-			    title: "SCOTT REALLY IS A WITCH",
-			    target: "timeline"
-			  });
+			document.addEventListener("DOMContentLoaded", function () {
+			  
+              var popcorn = Popcorn( "#video" );
+              popcorn.mute();
+              
+             $("#timeline").peerbind( options, "addEvent", function(e) {
+			    console.log( "HI WE SENT YOU AN EVENT AND YOU LIKED IT" );
+			    popcorn.play();
+				popcorn.timeline(options);
+              });
 			});
 			
 			/*$("#video").peerbind( options, "play", {});*/
@@ -74,10 +57,10 @@
 	</script>
   </head>
   <body onload="" id="stage" class="theme">
-	<video id="video" width="100%" height="100%" class="video-js" controls>
+	<video id="video" width="0px" height="0px" class="video-js" controls>
 		<source src="http://192.168.2.1/~jon/peerbind/atultroll.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
 		<source src="http://192.168.2.1/~jon/peerbind/atultroll.webm" type='video/webm; codecs="vp8, vorbis"' />
 	</video>
-	<div id="timeline"></div>
+	<div id="timeline" style="width:500px;height:700px;"></div>
   </body>
 </html>

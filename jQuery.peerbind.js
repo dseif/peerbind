@@ -887,7 +887,7 @@
 	};
 
 	$.fn.peerbind.defaults = {
-		'endpointprefixes': ["www", "www1", "www2", "www3", "www4", "www5", "www6", "www7", "www8", "www9", "www10"],
+		'endpointprefixes': [""],
 		'endpoint': "peerbind.com",
 		'referer': document.location.href + "",
 		'uuid': null,
