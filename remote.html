@@ -29,8 +29,9 @@
 				'pollinterval': 500, 
 				'pollmax': 31000,
 			};
-			
-      var popcorn = Popcorn( "#video1" );
+      Popcorn.player( "baseplayer" );
+
+      var popcorn = Popcorn.baseplayer( "#base" );  
 
       var reg = $().peerregister(options);
 
@@ -45,6 +46,6 @@
   </head>
   <body style="background-color:black">
     <div id="feeddiv" style="width:100%;height:100%;"></div>
-    <video id="video1" src="http://www.tpbafk.tv/augumentary/video/TPB_AFK_Demo720.theora.ogv" style="display:none"></video>
+    <div id="base"></div>
   </body>
 </html>
